@@ -1,7 +1,7 @@
 Package: pancancerPreprocessing
 Type: Package
 Title: Encapsulate basic function to process pancancer dataset
-Version: 0.1.1
+Version: 0.1.2
 Author: Paolo Martini 
 Maintainer: Paolo Martini <paolo.cavei@gmail.com>
 Description: Basic function to process pancancer multiomics data

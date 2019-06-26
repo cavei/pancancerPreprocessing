@@ -76,14 +76,15 @@ import_table <- function(file, header=T, row.names=1) {
 #' @return data.frame
 #' @export
 extract_infos_from_names <- function(barcodes) {
-  barcodes <- strsplit(barcodes, "-")
-  patients <- sapply(barcodes, function(barcode) {
+  barcodes_split <- strsplit(barcodes, "-")
+
+  patients <- sapply(barcodes_split, function(barcode) {
     patient <- paste(barcode[1:3], collapse="-")
   })
-  samples <- sapply(barcodes, function(barcode) {
+  samples <- sapply(barcodes_split, function(barcode) {
     sample <- substr(barcode[4], 1, 2)
   })
-  vials <- sapply(barcodes, function(barcode) {
+  vials <- sapply(barcodes_split, function(barcode) {
     vial <- substr(barcode[4], 3,3)
   })
   data.frame(patients, samples, vials, row.names=barcodes, stringsAsFactors = F)
