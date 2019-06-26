@@ -53,3 +53,39 @@ set_expand <- function(df, cols, sep=";", pairs=TRUE){
 
   DataFrame(mCOlList, expColsList)[,colnames(df)]
 }
+
+#' Wrapper for read table
+#'
+#' @param file a filename
+#' @param header if TRUE consider first line header
+#' @param row.names assume column as row.names
+#'
+#' @return data.frame
+#' @importFrom utils read.table
+#' @export
+import_table <- function(file, header=T, row.names=1) {
+  utils::read.table(file=file, header=header, row.names=row.names, sep="\t", quote="\"",
+             check.names = F, stringsAsFactors = F)
+}
+
+
+#' Extract infos from barcode
+#'
+#' @param barcodes a vector of barcode
+#'
+#' @return data.frame
+#' @export
+extract_infos_from_names <- function(barcodes) {
+  barcodes <- strsplit(barcodes, "-")
+  patients <- sapply(barcodes, function(barcode) {
+    patient <- paste(barcode[1:3], collapse="-")
+  })
+  samples <- sapply(barcodes, function(barcode) {
+    sample <- substr(barcode[4], 1, 2)
+  })
+  vials <- sapply(barcodes, function(barcode) {
+    vial <- substr(barcode[4], 3,3)
+  })
+  data.frame(patients, samples, vials, row.names=barcodes, stringsAsFactors = F)
+}
+
