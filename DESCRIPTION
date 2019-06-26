@@ -1,0 +1,14 @@
+Package: pancancerPreprocessing
+Type: Package
+Title: Encapsulate basic function to process pancancer dataset
+Version: 0.1.0
+Author: Paolo Martini 
+Maintainer: Paolo Martini <paolo.cavei@gmail.com>
+Description: Basic function to process pancancer multiomics data
+    Not fully documented; only for internal purpose.
+License: AGPL-3
+Encoding: UTF-8
+Depends: 
+Imports: impute, checkmate, org.Hs.eg.db, AnnotationDbi, SummarizedExperiment, S4Vectors
+LazyData: true
+RoxygenNote: 6.1.1
