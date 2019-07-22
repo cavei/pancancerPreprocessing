@@ -8,9 +8,9 @@
 \title{From maf format prepare the mutation table}
 \usage{
 prepareMutations(maf, impact = NULL, mutType = NULL,
-  filterByThisEntrez = NULL, patients = NULL, onlyPrimary = TRUE,
-  select_columns = c(hugo = 1, entrez = 2, impact = 94, type = 9, patient
-  = 16))
+  filterByThisEntrez = NULL, patients = NULL, select_type = TRUE,
+  tumor_site_type = "01", select_columns = c(hugo = 1, entrez = 2,
+  impact = 94, type = 9, patient = 16))
 
 summarizeMutation(smallMaf)
 
@@ -29,7 +29,9 @@ selectImpact(smallMaf, type)
 
 \item{patients}{keep only the patients listed}
 
-\item{onlyPrimary}{logical, keep only orimary tumor samples}
+\item{select_type}{logical to perform selection on the type}
+
+\item{tumor_site_type}{keep only tumor samples of the type. 01 primary solid tumor.}
 
 \item{select_columns}{named numeric to specyfy the columns to select}
 

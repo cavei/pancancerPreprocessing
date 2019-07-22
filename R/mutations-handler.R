@@ -5,7 +5,8 @@
 #' @param mutType select by mutation type
 #' @param filterByThisEntrez filter to keep only entred listed
 #' @param patients keep only the patients listed
-#' @param onlyPrimary logical, keep only orimary tumor samples
+#' @param select_type logical to perform selection on the type
+#' @param tumor_site_type keep only tumor samples of the type. 01 primary solid tumor.
 #' @param select_columns named numeric to specyfy the columns to select
 #'
 #' @rdname mutation-handler
@@ -14,7 +15,8 @@
 #'
 #' @export
 prepareMutations <- function(maf, impact=NULL, mutType=NULL, filterByThisEntrez=NULL, patients=NULL,
-                             onlyPrimary=TRUE, select_columns=c(hugo=1,entrez=2, impact=94, type=9, patient=16)) {
+                             select_type=TRUE, tumor_site_type="01",
+                             select_columns=c(hugo=1,entrez=2, impact=94, type=9, patient=16)) {
 
   if (is.null(names(select_columns)))
     stop("you need names associated to the columns to select")
@@ -25,10 +27,16 @@ prepareMutations <- function(maf, impact=NULL, mutType=NULL, filterByThisEntrez=
   if (NCOL(maf) < max(select_columns))
     stop("your imput does not appear to be a valid maf file")
 
-  if (onlyPrimary) {
+  if (select_type) {
     bcode <- maf$Tumor_Sample_Barcode
-    select <- substr(bcode, 14,15) == "01"
+    select <- substr(bcode, 14,15) == tumor_site_type
     maf <- maf[select, , drop=F]
+    if (nrow(maf)==0){
+      warning("No lines for maf. Maybe no sample for primary tumor")
+      stop(paste0("No samples with primary solid tumor. Choose among the following.\n",
+        paste(unique(substr(bcode, 14,15)), collapse=", "))
+      )
+    }
   }
 
   allPatientsMeasured <- unique(extractTCGAPatientsName(maf[[16]]))
